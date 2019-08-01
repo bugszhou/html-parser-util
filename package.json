@@ -1,6 +1,6 @@
 {
     "name": "html-parser-util",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "html2json,json2html",
     "author": "bugszhou | Email:bugszhou@outlook.com",
     "main": "index.js",
