@@ -49,7 +49,7 @@
         "rollup-plugin-node-globals": "^1.4.0",
         "rollup-plugin-node-resolve": "^5.2.0",
         "rollup-plugin-terser": "^5.1.1",
-        "ziu": "^1.6.0"
+        "ziu": "^1.6.2"
     },
     "license": "MIT",
     "browserslist": [
