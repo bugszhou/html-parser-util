@@ -1,40 +1,38 @@
 export const MODULE_NAME = 'html-parser-util';
 
 function q(v) {
-  return '"' + v + '"';
+  return `"${v}"`;
 }
 
 export function json2html(json) {
   // Empty Elements - HTML 4.01
-  var empty = ['area', 'base', 'basefont', 'br', 'col', 'frame', 'hr', 'img', 'input', 'isindex', 'link', 'meta', 'param', 'embed'];
+  const empty = ['area', 'base', 'basefont', 'br', 'col', 'frame', 'hr', 'img', 'input', 'isindex', 'link', 'meta', 'param', 'embed'];
 
-  var child = '';
+  let child = '';
   if (json.child) {
-    child = json.child.map(function(c) {
-      return json2html(c);
-    }).join('');
+    child = json.child.map((c) => json2html(c)).join('');
   }
 
-  var attr = '';
+  let attr = '';
   if (json.attr) {
-    attr = Object.keys(json.attr).map(function(key) {
-      var value = json.attr[key];
+    attr = Object.keys(json.attr).map((key) => {
+      let value = json.attr[key];
       if (Array.isArray(value)) value = value.join(' ');
-      return key + '=' + q(value);
+      return `${key}=${q(value)}`;
     }).join(' ');
-    if (attr !== '') attr = ' ' + attr;
+    if (attr !== '') attr = ` ${attr}`;
   }
 
   if (json.node === 'element') {
-    var tag = json.tag;
+    const { tag } = json;
     if (empty.indexOf(tag) > -1) {
       // empty element
-      return '<' + json.tag + attr + '/>';
+      return `<${json.tag}${attr}/>`;
     }
 
     // non empty element
-    var open = '<' + json.tag + attr + '>';
-    var close = '</' + json.tag + '>';
+    const open = `<${json.tag}${attr}>`;
+    const close = `</${json.tag}>`;
     return open + child + close;
   }
 
@@ -43,10 +41,12 @@ export function json2html(json) {
   }
 
   if (json.node === 'comment') {
-    return '<!--' + json.text + '-->';
+    return `<!--${json.text}-->`;
   }
 
   if (json.node === 'root') {
     return child;
   }
-};
+
+  return '';
+}
